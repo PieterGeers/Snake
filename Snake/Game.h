@@ -13,36 +13,30 @@ public:
 	void Draw( );
 
 	// Event handling
-	void ProcessKeyDownEvent( const SDL_KeyboardEvent& e );
-	void ProcessKeyUpEvent( const SDL_KeyboardEvent& e );
-	void ProcessMouseMotionEvent( const SDL_MouseMotionEvent& e );
-	void ProcessMouseDownEvent( const SDL_MouseButtonEvent& e );
-	void ProcessMouseUpEvent( const SDL_MouseButtonEvent& e );
+	void ProcessKeyDownEvent( const SDL_KeyboardEvent& e);
+	void ProcessKeyUpEvent(const SDL_KeyboardEvent& ) {}
+	void ProcessMouseMotionEvent(const SDL_MouseMotionEvent& ) {}
+	void ProcessMouseDownEvent(const SDL_MouseButtonEvent& ) {}
+	void ProcessMouseUpEvent(const SDL_MouseButtonEvent& ) {}
 
 private:
 	// DATA MEMBERS
 	Window m_Window;
-	float m_X, m_Y, m_AccTime;
-	Texture* m_pBackground;
+	float m_AccTime;
+
+	Snake* m_pSnake;
+
 	Texture* m_pFood;
-	static const int m_NrBackgroundTiles{ 900 };
-	Point2f* m_pBackgroundPos[m_NrBackgroundTiles];
 	bool m_DrawFood, m_GameLoop;
 	Point2f m_FoodPos;
-	Snake* m_pSnake[m_NrBackgroundTiles];
-	int m_SnakeLength;
+
 
 	// FUNCTIONS
 	void Initialize( );
 	void Cleanup( );
-	void ClearBackground( );
-	void InitializeBackgroundPos();
-	void DrawBackground();
+	void Clear( );
+	void DrawBackground() const;
 	void DrawFood();
-	void InitializeSnake();
-	void DrawSnake();
-	void UpdateSnake(float elapsedSec);
-	void SnakeEatsFood();
+	void SnakeEatsFood() const;
 	void LoseConditions();
-
 };
