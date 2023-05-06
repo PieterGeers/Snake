@@ -11,7 +11,7 @@ int main( int , char *[] )
 	{ // Make sure stack objects go out of scope before memory leaks are dumped
 		StartHeapControl();
 
-		Core core{ Window{ "Snake - Geers, Pieter - 1DAE17", 480.0f, 480.0f} };
+		Core core{ Window{ "Snake", 480.0f, 480.0f} };
 		core.Run();
 	}
 	DumpMemoryLeaks( );
