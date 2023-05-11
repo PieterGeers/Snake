@@ -117,6 +117,11 @@ bool Snake::HasEatenItself() const
 	return false;
 }
 
+Node* Snake::GetHead() const
+{
+	return m_pHead;
+}
+
 void Snake::ResetDirection()
 {
 	m_DirectionSnake = Direction::right;

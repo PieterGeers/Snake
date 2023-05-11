@@ -1,4 +1,5 @@
 #pragma once
+#include "Food.h"
 #include "Texture.h"
 #include "Snake.h"
 class Game
@@ -25,18 +26,15 @@ private:
 	float m_AccTime;
 
 	Snake* m_pSnake;
+	Food* m_pFood;
 
-	Texture* m_pFood;
 	bool m_DrawFood, m_GameLoop;
-	Point2f m_FoodPos;
-
 
 	// FUNCTIONS
 	void Initialize( );
 	void Cleanup( );
 	void Clear( );
 	void DrawBackground() const;
-	void DrawFood();
 	void SnakeEatsFood() const;
 	void LoseConditions();
 };

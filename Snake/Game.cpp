@@ -15,20 +15,18 @@ Game::~Game( )
 
 void Game::Initialize( )
 {
-	m_pFood = new Texture{ "Resources/apple.png" };
-
 	m_pSnake = new Snake{};
+	m_pFood = new Food{ m_Window };
 
 	m_AccTime = 0 ;
 	m_DrawFood = true;
 	m_GameLoop = true;
-	m_FoodPos = { 160, 160 };
 }
 
 void Game::Cleanup( )
 {
-	delete m_pFood;
 	delete m_pSnake;
+	delete m_pFood;
 	m_pFood = nullptr;
 }
 
@@ -54,8 +52,7 @@ void Game::Draw( )
 	DrawBackground();
 
 	m_pSnake->Draw();
-
-	DrawFood();
+	m_pFood->Draw();
 }
 
 void Game::ProcessKeyDownEvent( const SDL_KeyboardEvent & e )
@@ -96,30 +93,15 @@ void Game::DrawBackground() const
 	glEnd();
 }
 
-void Game::DrawFood()
-{
-	/*int Idx{ rand() % m_NrBackgroundTiles };
-	if (m_DrawFood == true)
-	{
-		for (int i{}; i < m_SnakeLength; ++i)
-		{
-			if (m_pSnake[i]->GetPosition().x != m_FoodPos.x && m_pSnake[i]->GetPosition().y != m_FoodPos.y)
-			{
-				m_FoodPos = { m_pBackgroundPos[Idx]->x, m_pBackgroundPos[Idx]->y };
-				m_DrawFood = false;
-			}
-		}
-	}*/
-	m_pFood->Draw({ m_FoodPos.x, m_FoodPos.y }, { 0, 0, m_pFood->GetWidth(), m_pFood->GetHeight() });
-}
-
 void Game::SnakeEatsFood() const
 {
 	const Point2f headPos = m_pSnake->GetPosition();
-	if (headPos.x == m_FoodPos.x && headPos.y == m_FoodPos.y)
+	const Point2f foodPos = m_pFood->GetPosition();
+
+	if (abs(headPos.x - foodPos.x) < 0.1f && abs(headPos.y - foodPos.y) < 0.1f)
 	{
 		m_pSnake->IncreaseSize();
-		std::cout << "Nom" << std::endl;
+		m_pFood->Reposition(m_Window, m_pSnake->GetHead());
 	}
 }
 
@@ -127,8 +109,8 @@ void Game::LoseConditions()
 {
 	const Point2f headPos = m_pSnake->GetPosition();
 
-	if (headPos.x < 0 || headPos.x > m_Window.width 
-		|| headPos.y < 0 || headPos.y > m_Window.height 
+	if (headPos.x < 0 || headPos.x >= m_Window.width 
+		|| headPos.y < 0 || headPos.y >= m_Window.height 
 		|| m_pSnake->HasEatenItself())
 	{
 		m_GameLoop = false;

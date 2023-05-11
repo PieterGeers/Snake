@@ -40,6 +40,7 @@ public:
 	Point2f GetPosition() const;
 	int GetScore() const;
 	bool HasEatenItself() const;
+	Node* GetHead() const;
 
 	void ResetDirection();
 	void IncreaseSize();
